@@ -40,6 +40,7 @@ void example7()
         }
         else i++;
         }while(m==0);
+        i=1;
         do
         {
         if(m==1 && fabs(I1n(i)-I1n(2*i))/3<100/e) 

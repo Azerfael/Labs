@@ -1,0 +1,111 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+float f(float x) {return exp(x)*cos(x)*cos(x)*x;}
+float In(float n) 
+{
+    float a=0,b=3.14159;
+    float In=f(a)+f(b);
+    float h=(b-a)/n;
+    for(float i=1;i<n;i++) In+=2*f(a+h*i);
+    return In*(h/2); 
+}
+float f1(float x) {return asin(sqrt(x/(x+1)));}
+float I1n(float n) 
+{
+    float a=0,b=3;
+    float I1n=f(a)+f(b);
+    float h=(b-a)/n;
+    for(float i=1;i<n;i++) I1n+=2*f1(a+h*i);
+    return I1n*(h/2); 
+}
+void example7() 
+{
+    float e;
+    int m=0;
+    cout<<"\n7.\nВычислить значения определенных интегралов с точностью ε. "
+    "Вычисления организовать в одном цикле таким образом, что при достижении" 
+    "требуемой точности вычисления одного интеграла продолжать вычислениятолько для другого интеграла. \n"
+    "z1=(e^x+cos(x)^2*x)dx [0,pi]; z2=arcsin(sqrt(x/1+x)dx [0,3]\nВведиче Е(точность расчётов):";
+    cin>>e;
+    for(float i=1;m!=2;i++)
+    {
+        do
+        {
+        if(m==0 && fabs(In(i)-In(2*i))/3<100/e) 
+        {
+            cout<<"\nz1="<<In(2*i)<<"\n";
+            m=1;
+        }
+        else i++;
+        }while(m==0);
+        i=1;
+        do
+        {
+        if(m==1 && fabs(I1n(i)-I1n(2*i))/3<100/e) 
+        {
+            cout<<"z2="<<I1n(2*i);
+            m=2;
+        }
+        else i++;
+        }while(m==1);
+    }       
+}
+void example28()
+{
+    cout<<"\n28.\nДана непустая последовательность целых чисел, оканчивающаяся нулём. Найти:\n"
+        "а) сумму всех чисел последовательности, больших числа х;\n"
+        "б) количество всех чётных чисел последовательности.\n";
+    srand(time(NULL));
+    int n=rand()%100+1;long sum=0,colCh=0,A[n];
+    float x;
+    cout<<"Введите число х:\n";
+    cin>>x;
+    for(int i=0;i<n;i++) A[i]=rand()%100;
+    A[n]=0;
+    for(int i=0;i<=n;i++) if(A[i]>x) sum+=A[i];
+    for(int i=0;i<=n;i++) if(A[i]%2==0) colCh++;
+    cout<<"Сумма всех чисел больше х:"<<sum<<"\nКоличество всех чётных чисел:"<<colCh;
+}
+void example49()
+{
+    cout<<"\n49.\nНайти все целые числа из промежутка от 100 до 300, у которых сумма делителей равна 50.\n";
+    int sum=0,m=0;
+    for(int i=100;i<=300;i++)
+    {
+    for(int n=i;n>=1;n--) if(i%n==0) sum+=n;
+    if(sum==50) 
+    {
+        cout<<"Число у которого сумма делителей равна 50"<<i<<"="<<sum<<"\n";
+        m++;
+    }
+    sum=0;
+    }
+    if(m==0) cout<<"В промежутке нет таких чисел\n";
+}
+void example70()
+{
+    cout<<"70.\nДано натуральное число n. Получить все натуральные числа, меньшие n и взаимно простые с ним (два натуральных"
+"числа называются взаимно простыми, если их наибольший общий делитель равен 1).\nВведите число n:";
+    int n;
+    cin>>n;
+    for(int i=1;i<=n-1;i++) 
+        for(int k=i;k>=1;k--) 
+            if(i%k==0 && n%k==0) 
+                if(k==1) 
+                    cout<<i<<" ";
+                else 
+                    break;
+}
+int main()
+{
+    setlocale(0, "rus");
+    int k=0;
+    cout<<"Введите номер задания: 7,28,49,70\n";
+    cin>>k;
+    if(k==7)  {system("clear");  example7();}
+	if(k==28) {system("clear"); example28();}
+	if(k==49) {system("clear"); example49();}
+	if(k==70) {system("clear"); example70();}
+}
